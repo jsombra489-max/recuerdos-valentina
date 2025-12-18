@@ -104,15 +104,6 @@
     <p>Mi lugar favorito en el mundo</p>
     <div class="date">18 de diciembre de 2024 — para siempre</div>
   </section>
-  <section>
-  <p style="font-size: 0.9rem; color: #777;">
-    🎵 Música para acompañar este momento
-  </p>
-  <audio controls loop style="width: 100%; max-width: 300px;">
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio.
-  </audio>
-</section>
 
   <section class="story">
     <h2>Nuestra historia</h2>
@@ -155,16 +146,27 @@
   </footer>
 <script>
   const elements = document.querySelectorAll('.fade-in');
+  const music = document.getElementById('bg-music');
+  let musicStarted = false;
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+
+        if (!musicStarted) {
+          music.volume = 0.15;
+          music.play().catch(() => {});
+          musicStarted = true;
+        }
       }
     });
   }, { threshold: 0.2 });
 
   elements.forEach(el => observer.observe(el));
+  <audio id="bg-music" loop preload="auto">
+  <source src="https://www.youtube.com/watch?v=oozQ4yV__Vw&list=RDoozQ4yV__Vw&start_radio=1" type="audio/mpeg">
+</audio>
 </script>
 </body>
 </html>
