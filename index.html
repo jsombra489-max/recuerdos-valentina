@@ -94,6 +94,34 @@
   opacity: 1;
   transform: translateY(0);
 }
+    #music-btn {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #b85c5c;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 999;
+}
+
+#music-btn:hover {
+  transform: scale(1.08);
+}
+
+#music-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
   </style>
 </head>
 
@@ -145,14 +173,15 @@
 <audio id="bg-music" loop preload="auto">
   <source src="musica.mp3" type="audio/mpeg">
 </audio>
+    <div id="music-btn" aria-label="Reproducir música">♪</div>
     Hecho con amor — 18 de diciembre
   </footer>
 <script>
   const elements = document.querySelectorAll('.fade-in');
   const music = document.getElementById('bg-music');
-  let musicStarted = false;
+  const musicBtn = document.getElementById('music-btn');
 
-  // Animaciones al scrollear
+  // Animaciones
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -163,14 +192,13 @@
 
   elements.forEach(el => observer.observe(el));
 
-  // Música al primer toque (requerido por el navegador)
-  document.addEventListener('click', () => {
-    if (!musicStarted && music) {
-      music.volume = 0.15;
-      music.play().catch(() => {});
-      musicStarted = true;
-    }
-  }, { once: true });
+  // Música con ícono
+  musicBtn.addEventListener('click', () => {
+    music.volume = 0.15;
+    music.play().then(() => {
+      musicBtn.classList.add('hidden');
+    }).catch(() => {});
+  });
 </script>
 </body>
 </html>
