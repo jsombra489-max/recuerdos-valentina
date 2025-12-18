@@ -84,6 +84,16 @@
       font-size: 0.9rem;
       color: #777;
     }
+    .fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
   </style>
 </head>
 
@@ -94,6 +104,15 @@
     <p>Mi lugar favorito en el mundo</p>
     <div class="date">18 de diciembre de 2024 — para siempre</div>
   </section>
+  <section>
+  <p style="font-size: 0.9rem; color: #777;">
+    🎵 Música para acompañar este momento
+  </p>
+  <audio controls loop style="width: 100%; max-width: 300px;">
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+</section>
 
   <section class="story">
     <h2>Nuestra historia</h2>
@@ -108,18 +127,19 @@
 
   <section>
     <h2>Nuestros recuerdos</h2>
+    <p>Algunos momentos que siempre voy a llevar conmigo.</p>
     <div class="gallery">
-      <img src="foto1.jpg" alt="Recuerdo 1">
-      <img src="foto2.jpg" alt="Recuerdo 2">
-      <img src="foto3.jpg" alt="Recuerdo 3">
-      <img src="foto4.jpg" alt="Recuerdo 4">
-      <img src="foto5.jpg" alt="Recuerdo 5">
-       <img src="foto6.jpg" alt="Recuerdo 6">
+      <img src="foto1.jpg" alt="Recuerdo 1" class="fade-in">
+      <img src="foto2.jpg" alt="Recuerdo 2" class="fade-in">
+      <img src="foto3.jpg" alt="Recuerdo 3" class="fade-in">
+      <img src="foto4.jpg" alt="Recuerdo 4" class="fade-in">
+      <img src="foto5.jpg" alt="Recuerdo 5" class="fade-in">
+       <img src="foto6.jpg" alt="Recuerdo 6" class="fade-in">
       <!-- podés agregar más -->
     </div>
   </section>
 
-  <section class="final">
+  <section class="final fade-in">
     <h2>Para vos</h2>
     <p>
       Gordita, te amo más de lo que estas palabras pueden explicar.
@@ -133,6 +153,18 @@
   <footer>
     Hecho con amor — 18 de diciembre
   </footer>
+<script>
+  const elements = document.querySelectorAll('.fade-in');
 
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  elements.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
