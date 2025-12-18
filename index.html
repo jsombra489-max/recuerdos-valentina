@@ -146,15 +146,15 @@
   </footer>
 <script>
   const elements = document.querySelectorAll('.fade-in');
-  const music = document.getElementById('bg-music');
   let musicStarted = false;
+  const music = document.getElementById('bg-music');
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
 
-        if (!musicStarted) {
+        if (music && !musicStarted) {
           music.volume = 0.15;
           music.play().catch(() => {});
           musicStarted = true;
