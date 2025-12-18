@@ -149,24 +149,28 @@
   </footer>
 <script>
   const elements = document.querySelectorAll('.fade-in');
-  let musicStarted = false;
   const music = document.getElementById('bg-music');
+  let musicStarted = false;
 
+  // Animaciones al scrollear
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-
-        if (music && !musicStarted) {
-          music.volume = 0.15;
-          music.play().catch(() => {});
-          musicStarted = true;
-        }
       }
     });
   }, { threshold: 0.2 });
 
   elements.forEach(el => observer.observe(el));
+
+  // Música al primer toque (requerido por el navegador)
+  document.addEventListener('click', () => {
+    if (!musicStarted && music) {
+      music.volume = 0.15;
+      music.play().catch(() => {});
+      musicStarted = true;
+    }
+  }, { once: true });
 </script>
 </body>
 </html>
